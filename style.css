@@ -1,0 +1,249 @@
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  background-color: light-dark(#ffffff, #1a1a1a);
+  color: light-dark(#333333, #e0e0e0);
+}
+
+.intro {
+  background: light-dark(#e8f5e9, #1b3b1e);
+  border-left: 4px solid #4caf50;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.1em;
+  border-radius: 4px;
+}
+
+.subsection {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: #388e3c;
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+  list-style: none;
+}
+
+h1, h2 {
+  color: #4caf50;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul ul {
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  transition: background 0.2s;
+  position: relative;
+  padding: 0.2rem;
+  border-radius: 4px;
+}
+
+li:hover {
+  background: light-dark(#f1f8e9, #2d3e2f);
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: #4caf50;
+}
+
+a {
+  color: light-dark(#388e3c, #66bb6a);
+  text-decoration: none;
+}
+
+a:hover {
+  color: light-dark(#1b5e20, #4caf50);
+  text-decoration: underline;
+}
+
+label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.difficulty {
+  font-size: 1.1em;
+  margin-left: auto;
+  color: #ffb300;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.info-popup {
+  display: none;
+  position: static;
+  margin: 2em 0;
+  background: light-dark(#fff, #2d2d2d);
+  color: light-dark(#222, #e0e0e0);
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px light-dark(rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+  padding: 1em;
+  min-width: 250px;
+  max-width: 100%;
+  font-size: 0.98em;
+}
+
+.info-popup .close {
+  float: right;
+  cursor: pointer;
+  color: #4caf50;
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 0.2em;
+  line-height: 1;
+}
+
+.info-popup .close:hover {
+  color: #d32f2f;
+}
+
+.info-popup strong {
+  color: #4caf50;
+  font-size: 1.1em;
+}
+
+.info-popup em {
+  color: light-dark(#666, #aaa);
+  font-weight: 600;
+}
+
+.info-popup a {
+  display: inline-block;
+  margin-top: 0.5em;
+  padding: 0.3em 0.6em;
+  background: light-dark(#e8f5e9, #1b3b1e);
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.info-popup a:hover {
+  background: light-dark(#c8e6c9, #2d4e30);
+}
+
+.quick-nav {
+  background: light-dark(#f5f5f5, #2a2a2a);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 2rem 0;
+  border: 1px solid light-dark(#e0e0e0, #444);
+}
+
+.nav-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+.nav-controls button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.nav-links a {
+  background: light-dark(#e8f5e9, #1b3b1e);
+  color: light-dark(#2e7d32, #66bb6a);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  border: 1px solid light-dark(#c8e6c9, #2d4e30);
+}
+
+.nav-links a:hover {
+  background: light-dark(#c8e6c9, #2d4e30);
+  transform: translateY(-1px);
+}
+
+#theme-toggle {
+  background: light-dark(#666, #555);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+#theme-toggle:hover {
+  background: light-dark(#555, #666);
+  transform: rotate(180deg);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    margin: 1rem;
+  }
+
+  .intro {
+    font-size: 1rem;
+  }
+
+  .info-popup {
+    font-size: 0.9em;
+  }
+
+  label {
+    flex-wrap: wrap;
+  }
+
+  .difficulty {
+    margin-left: 0.5em;
+  }
+}

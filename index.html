@@ -4,186 +4,697 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Checklist Dégooglisation FOSS</title>
-  <style>
-    :root {
-      color-scheme: light dark;
-    }
-    body {
-      font-family: system-ui, sans-serif;
-      margin: 2rem;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-    }
-    h1, h2 {
-      color: #4caf50;
-    }
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    li {
-      margin-bottom: 0.5rem;
-    }
-    input[type="checkbox"] {
-      margin-right: 0.5rem;
-    }
-    .actions {
-      margin-top: 2rem;
-    }
-    button {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="intro">
+    <strong>Pourquoi choisir le FOSS&nbsp;?</strong><br>
+    Le FOSS (Free and Open Source Software) garantit la liberté d'utiliser, d'étudier, de modifier et de partager les logiciels. Il protège ta vie privée, t'évite la dépendance à un fournisseur, favorise la transparence, la sécurité et la collaboration. Adopter le FOSS, c'est reprendre le contrôle sur ton numérique et soutenir une communauté engagée.
+
+    <br><br><strong>Pourquoi self-héberger&nbsp;?</strong><br>
+    L'auto-hébergement te donne un contrôle total sur tes données et services. Avec des solutions comme <strong>Jellyfin</strong> (alternative à Netflix/Plex), <strong>Nextcloud</strong> (cloud personnel), <strong>Bitwarden</strong> (gestionnaire de mots de passe) ou <strong>Photoprism</strong> (galerie photos), tu peux créer ton propre écosystème numérique. Plus de limites de stockage, plus de censure, plus d'espionnage&nbsp;: tes données restent chez toi !
+  </div>
+
   <h1>✅ Dégooglisation & Alternatives FOSS</h1>
   <p>Checklist pour reprendre le contrôle de ta vie numérique avec des outils libres, respectueux de la vie privée.</p>
+
+  <nav class="quick-nav">
+    <div class="nav-controls">
+      <button id="theme-toggle" title="Basculer le thème">🌓</button>
+      <button onclick="clearAll()">🧹 Tout réinitialiser</button>
+      <a href="https://github.com/RikiLaNeko/fossapp" target="_blank" rel="noopener noreferrer" class="source-link" title="Voir le code source">📂 Code source</a>
+    </div>
+    <div class="nav-filters">
+      <button id="filter-all" class="filter-btn active">🌐 Tout afficher</button>
+      <button id="filter-hosted" class="filter-btn">☁️ Services hébergés</button>
+      <button id="filter-selfhost" class="filter-btn">🏠 Auto-hébergement</button>
+    </div>
+    <div class="nav-links">
+      <a href="#navigateur">🧭 Navigateurs</a>
+      <a href="#moteurs">🔍 Moteurs</a>
+      <a href="#mail">📧 Mail</a>
+      <a href="#android">📱 Android</a>
+      <a href="#cartes">🗺️ Cartes</a>
+      <a href="#cloud">📂 Cloud</a>
+      <a href="#selfhost">🏠 Self-host</a>
+      <a href="#ia">🧠 IA</a>
+      <a href="#bureautique">💼 Bureautique</a>
+      <a href="#multimedia">🎵 Multimédia</a>
+      <a href="#communication">💬 Communication</a>
+      <a href="#os">🖥️ OS</a>
+    </div>
+  </nav>
 
   <div class="actions">
     <button onclick="clearAll()">🧹 Tout réinitialiser</button>
   </div>
 
-  <h2>🧭 Navigateur Web</h2>
+  <h2 id="navigateur">🧭 Navigateur Web</h2>
   <ul>
-    <li><label><input type="checkbox" data-key="librewolf"> LibreWolf</label></li>
-    <li><label><input type="checkbox" data-key="firefox"> Firefox (uBlock Origin, Privacy Badger…)</label></li>
-    <li><label><input type="checkbox" data-key="chromium"> Ungoogled Chromium</label></li>
-    <li><label><input type="checkbox" data-key="brave"> Brave</label></li>
+    <li><label><input type="checkbox" data-key="librewolf" class="info-trigger"> <a href="#" class="info-link" data-info="librewolf">LibreWolf</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="zen-browser" class="info-trigger"> <a href="#" class="info-link" data-info="zen">Zen</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="chromium" class="info-trigger"> <a href="#" class="info-link" data-info="chromium">Ungoogled Chromium</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="brave" class="info-trigger"> <a href="#" class="info-link" data-info="brave">Brave</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
   </ul>
 
-  <h2>🔍 Moteurs de recherche</h2>
+  <div id="librewolf-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>LibreWolf</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Un navigateur basé sur Firefox, axé sur la confidentialité et la sécurité, sans télémétrie.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Il protège ta vie privée et bloque les traqueurs par défaut.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    LibreWolf est open source, communautaire et transparent.<br><br>
+    <a href="https://librewolf.net/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="zen-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Zen</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Navigateur web moderne, axé sur la simplicité et la confidentialité.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Alternative légère et respectueuse de la vie privée.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Zen est open source et transparent.<br><br>
+    <a href="https://zen-browser.app/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="chromium-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Ungoogled Chromium</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Version dégooglisée de Chromium, sans services Google.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Navigateur rapide, sans pistage Google.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Basé sur Chromium open source, sans ajouts propriétaires.<br><br>
+    <a href="https://ungoogled-software.github.io/ungoogled-chromium/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="brave-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Brave</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Navigateur axé sur la confidentialité, bloqueur de pub intégré.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Navigation rapide et sécurisée, sans pistage.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Basé sur Chromium open source, code disponible.<br><br>
+    <a href="https://brave.com/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="moteurs">🔍 Moteurs de recherche</h2>
   <ul>
-    <li><label><input type="checkbox" data-key="searxng"> SearXNG</label></li>
-    <li><label><input type="checkbox" data-key="whoogle"> Whoogle</label></li>
-    <li><label><input type="checkbox" data-key="duckduckgo"> DuckDuckGo</label></li>
+    <li><label><input type="checkbox" data-key="searxng" class="info-trigger"> <a href="#" class="info-link" data-info="searxng">SearXNG</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="whoogle" class="info-trigger"> <a href="#" class="info-link" data-info="whoogle">Whoogle</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="duckduckgo" class="info-trigger"> <a href="#" class="info-link" data-info="duckduckgo">DuckDuckGo</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+  </ul>
+  <div id="searxng-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>SearXNG</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Métamoteur de recherche libre et décentralisé.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet de rechercher sans être pisté, auto-hébergeable.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source, code public.<br><br>
+    <a href="https://searxng.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="whoogle-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Whoogle</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Interface libre pour Google Search, sans pistage.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'utiliser Google sans Google.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source, auto-hébergeable.<br><br>
+    <a href="https://github.com/benbusby/whoogle-search" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="duckduckgo-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>DuckDuckGo</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Moteur de recherche axé sur la vie privée.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Ne trace pas ses utilisateurs.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Certaines parties du code sont open source.<br><br>
+    <a href="https://duckduckgo.com/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="mail">📧 Mail</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="protonmail" class="info-trigger"> <a href="#" class="info-link" data-info="protonmail">Proton Mail</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="tutanota" class="info-trigger"> <a href="#" class="info-link" data-info="tutanota">Tutanota</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="mailcow" class="info-trigger"> <a href="#" class="info-link" data-info="mailcow">Mailcow / Mail-in-a-Box</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+  </ul>
+  <div id="protonmail-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Proton Mail</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Service de messagerie chiffrée basé en Suisse.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Respecte la vie privée, chiffrement de bout en bout.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Le client web/mobile est open source.<br><br>
+    <a href="https://proton.me/fr/mail" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="tutanota-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Tutanota</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Service de mail sécurisé et chiffré.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Chiffrement automatique, vie privée.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Le client est open source.<br><br>
+    <a href="https://tutanota.com/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="mailcow-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Mailcow / Mail-in-a-Box</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Solutions pour héberger son propre serveur mail.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Contrôle total sur ses mails, auto-hébergement.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projets open source, code public.<br><br>
+    <a href="https://mailcow.email/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="android">📱 Android sans Google</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="fdroid" class="info-trigger"> <a href="#" class="info-link" data-info="fdroid">F-Droid</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="aurora" class="info-trigger"> <a href="#" class="info-link" data-info="aurora">Aurora Store</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="neostore" class="info-trigger"> <a href="#" class="info-link" data-info="neostore">Neo Store</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="izzyondroid" class="info-trigger"> <a href="#" class="info-link" data-info="izzyondroid">IzzyOnDroid</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+  </ul>
+  <div id="fdroid-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>F-Droid</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Catalogue d'applications libres pour Android.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'installer des apps sans Google Play.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Tout le catalogue est open source.<br><br>
+    <a href="https://f-droid.org/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="aurora-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Aurora Store</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Alternative libre au Play Store.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'accéder aux apps Android sans compte Google.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Application open source.<br><br>
+    <a href="https://auroraoss.com/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="neostore-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Neo Store</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Client moderne pour F-Droid.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Interface améliorée pour installer des apps libres.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Application open source.<br><br>
+    <a href="https://github.com/NeoApplications/Neo-Store" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="izzyondroid-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>IzzyOnDroid</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Dépôt alternatif d'apps libres pour F-Droid.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'accéder à plus d'applications open source.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Dépôt open source.<br><br>
+    <a href="https://apt.izzysoft.de/fdroid/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="cartes">🗺️ Cartes / Géolocalisation</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="organicmaps" class="info-trigger"> <a href="#" class="info-link" data-info="organicmaps">Organic Maps</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="osmand" class="info-trigger"> <a href="#" class="info-link" data-info="osmand">OsmAnd</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="qmap" class="info-trigger"> <a href="#" class="info-link" data-info="qmap">QMapShack / Marble</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="osm" class="info-trigger"> <a href="#" class="info-link" data-info="osm">OpenStreetMap (site web)</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+  </ul>
+  <div id="organicmaps-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Organic Maps</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Application de cartographie et navigation libre.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Fonctionne hors-ligne, respecte la vie privée.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Code open source, communauté active.<br><br>
+    <a href="https://organicmaps.app/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="osmand-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>OsmAnd</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Application de navigation et cartes hors-ligne.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Respecte la vie privée, open source.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Code source public.<br><br>
+    <a href="https://osmand.net/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="qmap-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>QMapShack / Marble</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Outils de cartographie et planification d'itinéraires.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Alternatives libres à Google Maps.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projets open source.<br><br>
+    <a href="https://marble.kde.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="osm-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>OpenStreetMap</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Projet collaboratif de cartographie libre.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Données ouvertes, alternatives à Google Maps.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Données et outils open source.<br><br>
+    <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="cloud">📂 Cloud & fichiers</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="nextcloud" class="info-trigger"> <a href="#" class="info-link" data-info="nextcloud">Nextcloud</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="seafile" class="info-trigger"> <a href="#" class="info-link" data-info="seafile">Seafile</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="cryptomator" class="info-trigger"> <a href="#" class="info-link" data-info="cryptomator">Cryptomator</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+  </ul>
+  <div id="nextcloud-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Nextcloud</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Suite cloud personnelle et collaborative.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'auto-héberger ses fichiers, contacts, agenda.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source, code public.<br><br>
+    <a href="https://nextcloud.com/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="seafile-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Seafile</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Solution de synchronisation et partage de fichiers.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Alternative libre à Dropbox.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Code open source.<br><br>
+    <a href="https://www.seafile.com/en/home/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="cryptomator-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Cryptomator</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Outil de chiffrement de fichiers pour le cloud.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Protège les données stockées sur le cloud.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Application open source.<br><br>
+    <a href="https://cryptomator.org/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="ia">🧠 IA locale</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="ollama" class="info-trigger"> <a href="#" class="info-link" data-info="ollama">Ollama</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="lmstudio" class="info-trigger"> <a href="#" class="info-link" data-info="lmstudio">LM Studio</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="kobold" class="info-trigger"> <a href="#" class="info-link" data-info="kobold">KoboldAI / Oobabooga</a> <span class="difficulty" title="Difficulté : ★★★★☆">★★★★☆</span></label></li>
+  </ul>
+  <div id="ollama-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Ollama</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Plateforme pour exécuter des modèles d'IA localement.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'utiliser l'IA sans cloud, confidentialité.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Code open source.<br><br>
+    <a href="https://ollama.com/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="lmstudio-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>LM Studio</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Interface graphique pour exécuter des modèles LLM localement.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'utiliser des IA open source sur son PC.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Application open source.<br><br>
+    <a href="https://lmstudio.ai/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="kobold-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>KoboldAI / Oobabooga</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Interfaces pour exécuter des modèles de langage localement.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Permet d'utiliser des IA génératives sans cloud.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projets open source.<br><br>
+    <a href="https://github.com/LostRuins/koboldcpp" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="bureautique">💼 Bureautique</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="libreoffice" class="info-trigger"> <a href="#" class="info-link" data-info="libreoffice">LibreOffice</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="onlyoffice" class="info-trigger"> <a href="#" class="info-link" data-info="onlyoffice">OnlyOffice</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="cryptpad" class="info-trigger"> <a href="#" class="info-link" data-info="cryptpad">CryptPad</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+  </ul>
+  <div id="libreoffice-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>LibreOffice</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Suite bureautique libre et complète.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Alternative gratuite à Microsoft Office.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source, communauté active.<br><br>
+    <a href="https://fr.libreoffice.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="onlyoffice-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>OnlyOffice</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Suite bureautique collaborative en ligne.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Compatible avec les formats Microsoft, collaboratif.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Version communautaire open source.<br><br>
+    <a href="https://www.onlyoffice.com/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="cryptpad-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>CryptPad</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Suite bureautique collaborative chiffrée.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Édition collaborative sans compromis sur la vie privée.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source français.<br><br>
+    <a href="https://cryptpad.fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="multimedia">🎵 Multimédia</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="vlc" class="info-trigger"> <a href="#" class="info-link" data-info="vlc">VLC Media Player</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="audacity" class="info-trigger"> <a href="#" class="info-link" data-info="audacity">Audacity</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="gimp" class="info-trigger"> <a href="#" class="info-link" data-info="gimp">GIMP</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="krita" class="info-trigger"> <a href="#" class="info-link" data-info="krita">Krita</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+  </ul>
+  <div id="vlc-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>VLC Media Player</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Lecteur multimédia universel.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Lit tous les formats, sans codec propriétaire.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source français.<br><br>
+    <a href="https://www.videolan.org/vlc/index.fr.html" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="audacity-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Audacity</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Éditeur audio libre et gratuit.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Alternative libre aux éditeurs audio payants.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source.<br><br>
+    <a href="https://www.audacityteam.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="gimp-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>GIMP</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Éditeur d'images professionnel libre.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Alternative libre à Photoshop.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source historique.<br><br>
+    <a href="https://www.gimp.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="krita-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Krita</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Logiciel de peinture numérique libre.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Spécialisé dans le dessin et la peinture digitale.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source de la fondation KDE.<br><br>
+    <a href="https://krita.org/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="communication">💬 Communication</h2>
+  <ul>
+    <li><label><input type="checkbox" data-key="signal" class="info-trigger"> <a href="#" class="info-link" data-info="signal">Signal</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="element" class="info-trigger"> <a href="#" class="info-link" data-info="element">Element (Matrix)</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="jami" class="info-trigger"> <a href="#" class="info-link" data-info="jami">Jami</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    <li><label><input type="checkbox" data-key="briar" class="info-trigger"> <a href="#" class="info-link" data-info="briar">Briar</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+  </ul>
+  <div id="signal-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Signal</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Messagerie instantanée chiffrée de bout en bout.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Alternative sécurisée à WhatsApp.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Application open source.<br><br>
+    <a href="https://signal.org/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="element-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Element (Matrix)</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Client pour le protocole de communication décentralisé Matrix.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Communication décentralisée, auto-hébergeable.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Protocole et client open source.<br><br>
+    <a href="https://element.io/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="jami-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Jami</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Plateforme de communication peer-to-peer.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Communication directe sans serveur central.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet GNU, entièrement libre.<br><br>
+    <a href="https://jami.net/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="briar-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Briar</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Messagerie sécurisée peer-to-peer.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Résistant à la censure, fonctionne même sans Internet.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source.<br><br>
+    <a href="https://briarproject.org/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+
+  <h2 id="os">🖥️ Systèmes d'exploitation</h2>
+  <ul>
+    <li class="subsection-title">Distributions Linux Desktop</li>
+    <ul class="subsection">
+      <li><label><input type="checkbox" data-key="ubuntu" class="info-trigger"> <a href="#" class="info-link" data-info="ubuntu">Ubuntu</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="debian" class="info-trigger"> <a href="#" class="info-link" data-info="debian">Debian</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="mint" class="info-trigger"> <a href="#" class="info-link" data-info="mint">Linux Mint</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="popos" class="info-trigger"> <a href="#" class="info-link" data-info="popos">Pop!_OS</a> <span class="difficulty" title="Difficulté : ★☆☆☆☆">★☆☆☆☆</span></label></li>
+    </ul>
+    <li class="subsection-title">Basées sur Arch</li>
+    <ul class="subsection">
+      <li><label><input type="checkbox" data-key="arch" class="info-trigger"> <a href="#" class="info-link" data-info="arch">Arch Linux</a> <span class="difficulty" title="Difficulté : ★★★★☆">★★★★☆</span></label></li>
+      <li><label><input type="checkbox" data-key="manjaro" class="info-trigger"> <a href="#" class="info-link" data-info="manjaro">Manjaro</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="endeavouros" class="info-trigger"> <a href="#" class="info-link" data-info="endeavouros">EndeavourOS</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="garuda" class="info-trigger"> <a href="#" class="info-link" data-info="garuda">Garuda Linux</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+    </ul>
+    <li class="subsection-title">Autres distributions</li>
+    <ul class="subsection">
+      <li><label><input type="checkbox" data-key="fedora" class="info-trigger"> <a href="#" class="info-link" data-info="fedora">Fedora</a> <span class="difficulty" title="Difficulté : ★★☆☆☆">★★☆☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="opensuse" class="info-trigger"> <a href="#" class="info-link" data-info="opensuse">openSUSE</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="nixos" class="info-trigger"> <a href="#" class="info-link" data-info="nixos">NixOS</a> <span class="difficulty" title="Difficulté : ★★★★☆">★★★★☆</span></label></li>
+    </ul>
+    <li class="subsection-title">Android alternatifs</li>
+    <ul class="subsection">
+      <li><label><input type="checkbox" data-key="eos" class="info-trigger"> <a href="#" class="info-link" data-info="eos">/e/OS</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+      <li><label><input type="checkbox" data-key="graphene" class="info-trigger"> <a href="#" class="info-link" data-info="graphene">GrapheneOS</a> <span class="difficulty" title="Difficulté : ★★★★☆">★★★★☆</span></label></li>
+      <li><label><input type="checkbox" data-key="lineage" class="info-trigger"> <a href="#" class="info-link" data-info="lineage">LineageOS</a> <span class="difficulty" title="Difficulté : ★★★☆☆">★★★☆☆</span></label></li>
+    </ul>
   </ul>
 
-  <h2>📧 Mail</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="protonmail"> Proton Mail</label></li>
-    <li><label><input type="checkbox" data-key="tutanota"> Tutanota</label></li>
-    <li><label><input type="checkbox" data-key="mailcow"> Mailcow / Mail-in-a-Box</label></li>
-  </ul>
+  <div id="ubuntu-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Ubuntu</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution Linux populaire et conviviale.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Parfaite pour débuter avec Linux, grande communauté.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Basée sur Debian, entièrement open source.<br><br>
+    <a href="https://ubuntu.com/desktop" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="debian-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Debian</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution Linux stable et éprouvée.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Base de nombreuses autres distributions, très stable.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet 100% libre, engagement fort pour le FOSS.<br><br>
+    <a href="https://www.debian.org/index.fr.html" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="mint-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Linux Mint</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution Linux élégante et facile d'utilisation.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Interface familière, idéale pour migrer depuis Windows.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Basée sur Ubuntu, entièrement libre.<br><br>
+    <a href="https://linuxmint.com/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="popos-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Pop!_OS</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution Linux optimisée pour les développeurs.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Excellent support des cartes graphiques, interface moderne.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Développée par System76, basée sur Ubuntu.<br><br>
+    <a href="https://pop.system76.com/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="arch-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Arch Linux</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution Linux minimaliste et rolling release.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Contrôle total sur son système, toujours à jour.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Distribution 100% libre, philosophie KISS.<br><br>
+    <a href="https://archlinux.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="manjaro-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Manjaro</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution basée sur Arch Linux, plus accessible.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Avantages d'Arch avec facilité d'installation.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Basée sur Arch, entièrement libre.<br><br>
+    <a href="https://manjaro.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="endeavouros-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>EndeavourOS</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution basée sur Arch avec installateur graphique.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Expérience Arch pure avec installation simplifiée.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Proche d'Arch vanilla, entièrement libre.<br><br>
+    <a href="https://endeavouros.com/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="garuda-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Garuda Linux</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution Arch avec interface moderne et gaming-friendly.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Optimisée pour les performances et le gaming.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Basée sur Arch, open source.<br><br>
+    <a href="https://garudalinux.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="fedora-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>Fedora</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution communautaire sponsorisée par Red Hat.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Technologies de pointe, stable et innovante.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Engagement fort pour les logiciels libres uniquement.<br><br>
+    <a href="https://getfedora.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="opensuse-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>openSUSE</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution allemande robuste avec YaST.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Excellent outil de configuration, très stable.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet communautaire open source.<br><br>
+    <a href="https://www.opensuse.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="nixos-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>NixOS</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Distribution avec gestion déclarative et reproductible.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Configuration versionnée, rollbacks faciles.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Entièrement open source, approche innovante.<br><br>
+    <a href="https://nixos.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="eos-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>/e/OS</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Android dégooglisé avec services alternatifs intégrés.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Remplacement complet de Google sur Android.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Basé sur LineageOS, entièrement open source.<br><br>
+    <a href="https://e.foundation/fr/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="graphene-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>GrapheneOS</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Android durci axé sur la sécurité et la vie privée.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Sécurité renforcée, protection maximale.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Projet open source de sécurité.<br><br>
+    <a href="https://grapheneos.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
+  <div id="lineage-info" class="info-popup" style="display:none;position:static;margin:2em 0 2em 0;">
+    <span class="close" style="float:right;cursor:pointer;">×</span>
+    <strong>LineageOS</strong><br>
+    <em>Qu'est-ce que c'est ?</em><br>
+    Android libre successeur de CyanogenMod.<br><br>
+    <em>Pourquoi c'est important ?</em><br>
+    Support étendu d'appareils, Android sans Google.<br><br>
+    <em>En quoi c'est FOSS ?</em><br>
+    Entièrement open source, communauté active.<br><br>
+    <a href="https://lineageos.org/" target="_blank" rel="noopener noreferrer">Visiter le site officiel</a>
+  </div>
 
-  <h2>📱 Android sans Google</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="fdroid"> F-Droid</label></li>
-    <li><label><input type="checkbox" data-key="aurora"> Aurora Store</label></li>
-    <li><label><input type="checkbox" data-key="neostore"> Neo Store</label></li>
-    <li><label><input type="checkbox" data-key="izzyondroid"> IzzyOnDroid</label></li>
-  </ul>
-
-  <h2>🗺️ Cartes / Géolocalisation</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="organicmaps"> Organic Maps</label></li>
-    <li><label><input type="checkbox" data-key="osmand"> OsmAnd</label></li>
-    <li><label><input type="checkbox" data-key="qmap"> QMapShack / Marble</label></li>
-    <li><label><input type="checkbox" data-key="osm"> OpenStreetMap (site web)</label></li>
-  </ul>
-
-  <h2>📂 Cloud & fichiers</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="nextcloud"> Nextcloud</label></li>
-    <li><label><input type="checkbox" data-key="seafile"> Seafile</label></li>
-    <li><label><input type="checkbox" data-key="cryptomator"> Cryptomator</label></li>
-  </ul>
-
-  <h2>🧠 IA locale</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="ollama"> Ollama</label></li>
-    <li><label><input type="checkbox" data-key="lmstudio"> LM Studio</label></li>
-    <li><label><input type="checkbox" data-key="kobold"> KoboldAI / Oobabooga</label></li>
-  </ul>
-
-  <h2>🎧 Multimédia</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="newpipe"> NewPipe</label></li>
-    <li><label><input type="checkbox" data-key="piped"> Piped</label></li>
-    <li><label><input type="checkbox" data-key="funkwhale"> Funkwhale</label></li>
-    <li><label><input type="checkbox" data-key="navidrome"> Navidrome</label></li>
-    <li><label><input type="checkbox" data-key="antennapod"> AntennaPod</label></li>
-  </ul>
-
-  <h2>💬 Messagerie</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="signal"> Signal</label></li>
-    <li><label><input type="checkbox" data-key="session"> Session</label></li>
-    <li><label><input type="checkbox" data-key="element"> Element (Matrix – alternative à Discord)</label></li>
-    <li><label><input type="checkbox" data-key="xmpp"> XMPP (Dino, Conversations…)</label></li>
-  </ul>
-
-  <h2>🗒️ Bureautique & docs</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="libreoffice"> LibreOffice</label></li>
-    <li><label><input type="checkbox" data-key="onlyoffice"> OnlyOffice</label></li>
-    <li><label><input type="checkbox" data-key="collabora"> Collabora</label></li>
-    <li><label><input type="checkbox" data-key="cryptpad"> CryptPad</label></li>
-  </ul>
-
-  <h2>📆 Agenda & contacts</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="ncagenda"> Nextcloud Agenda</label></li>
-    <li><label><input type="checkbox" data-key="etar"> Etar (Android)</label></li>
-    <li><label><input type="checkbox" data-key="davx"> DAVx⁵</label></li>
-  </ul>
-
-  <h2>🔐 Sécurité & Auth</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="aegis"> Aegis Authenticator</label></li>
-    <li><label><input type="checkbox" data-key="freeotp"> FreeOTP</label></li>
-  </ul>
-
-  <h2>📷 Photos</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="immich"> Immich</label></li>
-    <li><label><input type="checkbox" data-key="photoprism"> PhotoPrism</label></li>
-  </ul>
-
-  <h2>📦 Compétences à apprendre</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="docker"> Docker</label></li>
-    <li><label><input type="checkbox" data-key="markdown"> Markdown</label></li>
-    <li><label><input type="checkbox" data-key="git"> Git & GitHub Pages</label></li>
-    <li><label><input type="checkbox" data-key="gpg"> GPG</label></li>
-    <li><label><input type="checkbox" data-key="ssh"> SSH + Fail2ban</label></li>
-  </ul>
-
-  <h2>🖥️ Systèmes d’exploitation</h2>
-  <ul>
-    <li><label><input type="checkbox" data-key="linux"> Linux (Debian, Ubuntu, Fedora…)</label></li>
-    <li><label><input type="checkbox" data-key="eos"> /e/OS</label></li>
-    <li><label><input type="checkbox" data-key="graphene"> GrapheneOS</label></li>
-    <li><label><input type="checkbox" data-key="lineage"> LineageOS</label></li>
-  </ul>
-
-  <script>
-    window.onload = () => {
-      document.querySelectorAll('input[type="checkbox"]').forEach(box => {
-        const key = box.dataset.key;
-        if (!key) return;
-        box.checked = localStorage.getItem(key) === 'true';
-        box.addEventListener('change', () => {
-          localStorage.setItem(key, box.checked);
-        });
-      });
-    };
-
-    function clearAll() {
-      document.querySelectorAll('input[type="checkbox"]').forEach(box => {
-        box.checked = false;
-        localStorage.removeItem(box.dataset.key);
-      });
-    }
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
