@@ -35,7 +35,20 @@ window.onload = () => {
   document.getElementById('filter-selfhost').onclick = () => setFilter('selfhost');
   // Initialiser le reste de la page (hors sections dynamiques)
   initFossappInteractions();
+  initIntroToggle();
 };
+
+// Gestion ouverture/fermeture de l'intro
+function initIntroToggle() {
+  const btn = document.querySelector('.intro-toggle');
+  const content = document.getElementById('intro-content');
+  if (!btn || !content) return;
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    content.style.display = expanded ? 'none' : 'block';
+  });
+}
 
 function initFossappInteractions() {
   document.querySelectorAll('input[type="checkbox"]').forEach(box => {
