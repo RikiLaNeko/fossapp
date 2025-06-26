@@ -34,7 +34,6 @@ window.onload = () => {
   document.getElementById('filter-hosted').onclick = () => setFilter('hosted');
   document.getElementById('filter-selfhost').onclick = () => setFilter('selfhost');
   // Initialiser le reste de la page (hors sections dynamiques)
-  initFossappInteractions();
   initIntroToggle();
 };
 
