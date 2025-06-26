@@ -29,123 +29,161 @@
     input[type="checkbox"] {
       margin-right: 0.5rem;
     }
+    .actions {
+      margin-top: 2rem;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
   <h1>✅ Dégooglisation & Alternatives FOSS</h1>
   <p>Checklist pour reprendre le contrôle de ta vie numérique avec des outils libres, respectueux de la vie privée.</p>
 
+  <div class="actions">
+    <button onclick="clearAll()">🧹 Tout réinitialiser</button>
+  </div>
+
   <h2>🧭 Navigateur Web</h2>
   <ul>
-    <li><input type="checkbox" /> LibreWolf</li>
-    <li><input type="checkbox" /> Firefox (uBlock Origin, Privacy Badger…)</li>
-    <li><input type="checkbox" /> Ungoogled Chromium</li>
-    <li><input type="checkbox" /> Brave</li>
+    <li><label><input type="checkbox" data-key="librewolf"> LibreWolf</label></li>
+    <li><label><input type="checkbox" data-key="firefox"> Firefox (uBlock Origin, Privacy Badger…)</label></li>
+    <li><label><input type="checkbox" data-key="chromium"> Ungoogled Chromium</label></li>
+    <li><label><input type="checkbox" data-key="brave"> Brave</label></li>
   </ul>
 
   <h2>🔍 Moteurs de recherche</h2>
   <ul>
-    <li><input type="checkbox" /> SearXNG</li>
-    <li><input type="checkbox" /> Whoogle</li>
-    <li><input type="checkbox" /> DuckDuckGo</li>
+    <li><label><input type="checkbox" data-key="searxng"> SearXNG</label></li>
+    <li><label><input type="checkbox" data-key="whoogle"> Whoogle</label></li>
+    <li><label><input type="checkbox" data-key="duckduckgo"> DuckDuckGo</label></li>
   </ul>
 
   <h2>📧 Mail</h2>
   <ul>
-    <li><input type="checkbox" /> Proton Mail</li>
-    <li><input type="checkbox" /> Tutanota</li>
-    <li><input type="checkbox" /> Mailcow / Mail-in-a-Box</li>
+    <li><label><input type="checkbox" data-key="protonmail"> Proton Mail</label></li>
+    <li><label><input type="checkbox" data-key="tutanota"> Tutanota</label></li>
+    <li><label><input type="checkbox" data-key="mailcow"> Mailcow / Mail-in-a-Box</label></li>
   </ul>
 
   <h2>📱 Android sans Google</h2>
   <ul>
-    <li><input type="checkbox" /> F-Droid</li>
-    <li><input type="checkbox" /> Aurora Store</li>
-    <li><input type="checkbox" /> Neo Store</li>
-    <li><input type="checkbox" /> IzzyOnDroid</li>
+    <li><label><input type="checkbox" data-key="fdroid"> F-Droid</label></li>
+    <li><label><input type="checkbox" data-key="aurora"> Aurora Store</label></li>
+    <li><label><input type="checkbox" data-key="neostore"> Neo Store</label></li>
+    <li><label><input type="checkbox" data-key="izzyondroid"> IzzyOnDroid</label></li>
   </ul>
 
   <h2>🗺️ Cartes / Géolocalisation</h2>
   <ul>
-    <li><input type="checkbox" /> Organic Maps</li>
-    <li><input type="checkbox" /> OsmAnd</li>
-    <li><input type="checkbox" /> QMapShack / Marble</li>
-    <li><input type="checkbox" /> OpenStreetMap (site web)</li>
+    <li><label><input type="checkbox" data-key="organicmaps"> Organic Maps</label></li>
+    <li><label><input type="checkbox" data-key="osmand"> OsmAnd</label></li>
+    <li><label><input type="checkbox" data-key="qmap"> QMapShack / Marble</label></li>
+    <li><label><input type="checkbox" data-key="osm"> OpenStreetMap (site web)</label></li>
   </ul>
 
   <h2>📂 Cloud & fichiers</h2>
   <ul>
-    <li><input type="checkbox" /> Nextcloud</li>
-    <li><input type="checkbox" /> Seafile</li>
-    <li><input type="checkbox" /> Cryptomator</li>
+    <li><label><input type="checkbox" data-key="nextcloud"> Nextcloud</label></li>
+    <li><label><input type="checkbox" data-key="seafile"> Seafile</label></li>
+    <li><label><input type="checkbox" data-key="cryptomator"> Cryptomator</label></li>
   </ul>
 
   <h2>🧠 IA locale</h2>
   <ul>
-    <li><input type="checkbox" /> Ollama</li>
-    <li><input type="checkbox" /> LM Studio</li>
-    <li><input type="checkbox" /> KoboldAI / Oobabooga</li>
+    <li><label><input type="checkbox" data-key="ollama"> Ollama</label></li>
+    <li><label><input type="checkbox" data-key="lmstudio"> LM Studio</label></li>
+    <li><label><input type="checkbox" data-key="kobold"> KoboldAI / Oobabooga</label></li>
   </ul>
 
   <h2>🎧 Multimédia</h2>
   <ul>
-    <li><input type="checkbox" /> NewPipe</li>
-    <li><input type="checkbox" /> Piped</li>
-    <li><input type="checkbox" /> Funkwhale</li>
-    <li><input type="checkbox" /> Navidrome</li>
-    <li><input type="checkbox" /> AntennaPod</li>
+    <li><label><input type="checkbox" data-key="newpipe"> NewPipe</label></li>
+    <li><label><input type="checkbox" data-key="piped"> Piped</label></li>
+    <li><label><input type="checkbox" data-key="funkwhale"> Funkwhale</label></li>
+    <li><label><input type="checkbox" data-key="navidrome"> Navidrome</label></li>
+    <li><label><input type="checkbox" data-key="antennapod"> AntennaPod</label></li>
   </ul>
 
   <h2>💬 Messagerie</h2>
   <ul>
-    <li><input type="checkbox" /> Signal</li>
-    <li><input type="checkbox" /> Session</li>
-    <li><input type="checkbox" /> Element (Matrix – alternative à Discord)</li>
-    <li><input type="checkbox" /> XMPP (Dino, Conversations…)</li>
+    <li><label><input type="checkbox" data-key="signal"> Signal</label></li>
+    <li><label><input type="checkbox" data-key="session"> Session</label></li>
+    <li><label><input type="checkbox" data-key="element"> Element (Matrix – alternative à Discord)</label></li>
+    <li><label><input type="checkbox" data-key="xmpp"> XMPP (Dino, Conversations…)</label></li>
   </ul>
 
   <h2>🗒️ Bureautique & docs</h2>
   <ul>
-    <li><input type="checkbox" /> LibreOffice</li>
-    <li><input type="checkbox" /> OnlyOffice</li>
-    <li><input type="checkbox" /> Collabora</li>
-    <li><input type="checkbox" /> CryptPad</li>
+    <li><label><input type="checkbox" data-key="libreoffice"> LibreOffice</label></li>
+    <li><label><input type="checkbox" data-key="onlyoffice"> OnlyOffice</label></li>
+    <li><label><input type="checkbox" data-key="collabora"> Collabora</label></li>
+    <li><label><input type="checkbox" data-key="cryptpad"> CryptPad</label></li>
   </ul>
 
   <h2>📆 Agenda & contacts</h2>
   <ul>
-    <li><input type="checkbox" /> Nextcloud Agenda</li>
-    <li><input type="checkbox" /> Etar (Android)</li>
-    <li><input type="checkbox" /> DAVx⁵</li>
+    <li><label><input type="checkbox" data-key="ncagenda"> Nextcloud Agenda</label></li>
+    <li><label><input type="checkbox" data-key="etar"> Etar (Android)</label></li>
+    <li><label><input type="checkbox" data-key="davx"> DAVx⁵</label></li>
   </ul>
 
   <h2>🔐 Sécurité & Auth</h2>
   <ul>
-    <li><input type="checkbox" /> Aegis Authenticator</li>
-    <li><input type="checkbox" /> FreeOTP</li>
+    <li><label><input type="checkbox" data-key="aegis"> Aegis Authenticator</label></li>
+    <li><label><input type="checkbox" data-key="freeotp"> FreeOTP</label></li>
   </ul>
 
   <h2>📷 Photos</h2>
   <ul>
-    <li><input type="checkbox" /> Immich</li>
-    <li><input type="checkbox" /> PhotoPrism</li>
+    <li><label><input type="checkbox" data-key="immich"> Immich</label></li>
+    <li><label><input type="checkbox" data-key="photoprism"> PhotoPrism</label></li>
   </ul>
 
   <h2>📦 Compétences à apprendre</h2>
   <ul>
-    <li><input type="checkbox" /> Docker</li>
-    <li><input type="checkbox" /> Markdown</li>
-    <li><input type="checkbox" /> Git & GitHub Pages</li>
-    <li><input type="checkbox" /> GPG</li>
-    <li><input type="checkbox" /> SSH + Fail2ban</li>
+    <li><label><input type="checkbox" data-key="docker"> Docker</label></li>
+    <li><label><input type="checkbox" data-key="markdown"> Markdown</label></li>
+    <li><label><input type="checkbox" data-key="git"> Git & GitHub Pages</label></li>
+    <li><label><input type="checkbox" data-key="gpg"> GPG</label></li>
+    <li><label><input type="checkbox" data-key="ssh"> SSH + Fail2ban</label></li>
   </ul>
 
   <h2>🖥️ Systèmes d’exploitation</h2>
   <ul>
-    <li><input type="checkbox" /> Linux (Debian, Ubuntu, Fedora…)</li>
-    <li><input type="checkbox" /> /e/OS</li>
-    <li><input type="checkbox" /> GrapheneOS</li>
-    <li><input type="checkbox" /> LineageOS</li>
+    <li><label><input type="checkbox" data-key="linux"> Linux (Debian, Ubuntu, Fedora…)</label></li>
+    <li><label><input type="checkbox" data-key="eos"> /e/OS</label></li>
+    <li><label><input type="checkbox" data-key="graphene"> GrapheneOS</label></li>
+    <li><label><input type="checkbox" data-key="lineage"> LineageOS</label></li>
   </ul>
+
+  <script>
+    window.onload = () => {
+      document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+        const key = box.dataset.key;
+        if (!key) return;
+        box.checked = localStorage.getItem(key) === 'true';
+        box.addEventListener('change', () => {
+          localStorage.setItem(key, box.checked);
+        });
+      });
+    };
+
+    function clearAll() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+        box.checked = false;
+        localStorage.removeItem(box.dataset.key);
+      });
+    }
+  </script>
 </body>
 </html>
