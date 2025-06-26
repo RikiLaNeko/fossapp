@@ -68,7 +68,14 @@
   </nav>
 
   <div class="actions">
+    <input type="text" id="search-input" placeholder="🔎 Rechercher une alternative..."
+           style="width:70%;max-width:350px;padding:0.5em;margin-bottom:1em;border-radius:6px;border:1px solid #4caf50;">
+    <span id="progress-counter" style="margin-left:1em;font-weight:bold;color:#388e3c;"></span>
+    <br>
     <button onclick="clearAll()">🧹 Tout réinitialiser</button>
+    <button id="export-btn">💾 Exporter</button>
+    <button id="import-btn">📂 Importer</button>
+    <input type="file" id="import-file" accept="application/json" style="display:none;">
   </div>
 
   <div id="section-navigateur"></div>

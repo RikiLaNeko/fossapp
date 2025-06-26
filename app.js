@@ -56,19 +56,23 @@ function initFossappInteractions() {
     box.checked = localStorage.getItem(key) === 'true';
     box.addEventListener('change', () => {
       localStorage.setItem(key, box.checked);
+      updateProgressCounter();
     });
   });
+  updateProgressCounter();
 
   // Gestion des liens info (affichage des explications en bas)
   document.querySelectorAll('.info-link').forEach(link => {
     link.addEventListener('click', function(e) {
       e.preventDefault();
       const infoId = this.dataset.info + '-info';
-      document.querySelectorAll('.info-popup').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.info-popup').forEach(p => animatePopup(p, false));
       const popup = document.getElementById(infoId);
       if (popup) {
-        popup.style.display = 'block';
+        animatePopup(popup, true); // suppression de l'auto-fermeture
         popup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Focus pour accessibilité
+        //setTimeout(() => { popup.focus && popup.focus(); }, 250);
       }
     });
   });
@@ -77,7 +81,17 @@ function initFossappInteractions() {
   document.querySelectorAll('.info-popup .close').forEach(btn => {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      this.parentElement.style.display = 'none';
+      animatePopup(this.parentElement, false);
+    });
+  });
+
+  // Accessibilité clavier pour popup (Échap)
+  document.querySelectorAll('.info-popup').forEach(popup => {
+    popup.setAttribute('tabindex', '-1');
+    popup.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        animatePopup(popup, false);
+      }
     });
   });
 
@@ -167,5 +181,152 @@ function clearAll() {
   document.querySelectorAll('input[type="checkbox"]').forEach(box => {
     box.checked = false;
     localStorage.removeItem(box.dataset.key);
+  });
+}
+
+function updateProgressCounter() {
+  const allBoxes = document.querySelectorAll('input[type="checkbox"][data-key]');
+  const checked = Array.from(allBoxes).filter(box => box.checked).length;
+  const total = allBoxes.length;
+  const counter = document.getElementById('progress-counter');
+  if (counter) counter.textContent = `${checked} / ${total} alternatives cochées`;
+}
+
+function filterAlternativesBySearch(query) {
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('[data-type-section]').forEach(section => {
+    let sectionVisible = false;
+    section.querySelectorAll('li').forEach(li => {
+      const text = li.textContent.toLowerCase();
+      if (!q || text.includes(q)) {
+        li.style.display = '';
+        sectionVisible = true;
+      } else {
+        li.style.display = 'none';
+      }
+    });
+    section.style.display = sectionVisible ? '' : 'none';
+  });
+}
+
+function exportChecklist() {
+  const allBoxes = document.querySelectorAll('input[type="checkbox"][data-key]');
+  const data = {};
+  allBoxes.forEach(box => {
+    data[box.dataset.key] = box.checked;
+  });
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'fossapp-checklist.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importChecklist(file) {
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      document.querySelectorAll('input[type="checkbox"][data-key]').forEach(box => {
+        if (data.hasOwnProperty(box.dataset.key)) {
+          box.checked = !!data[box.dataset.key];
+          localStorage.setItem(box.dataset.key, box.checked);
+        }
+      });
+      updateProgressCounter();
+    } catch (err) {
+      alert('Fichier invalide.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// Ajout d'animation pour les popups
+function animatePopup(popup, show) {
+  if (!popup) return;
+  if (show) {
+    popup.style.display = 'block';
+    popup.classList.add('popup-fade-in');
+    popup.classList.remove('popup-fade-out');
+    // Suppression TOTALE de toute gestion d'auto-fermeture
+    if (typeof popup._autoCloseTimeout !== 'undefined') {
+      clearTimeout(popup._autoCloseTimeout);
+      popup._autoCloseTimeout = undefined;
+    }
+  } else {
+    popup.classList.remove('popup-fade-in');
+    popup.classList.add('popup-fade-out');
+    if (typeof popup._autoCloseTimeout !== 'undefined') {
+      clearTimeout(popup._autoCloseTimeout);
+      popup._autoCloseTimeout = undefined;
+    }
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Recherche rapide
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', e => {
+      filterAlternativesBySearch(e.target.value);
+    });
+  }
+  // Export
+  const exportBtn = document.getElementById('export-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', exportChecklist);
+  }
+  // Import
+  const importBtn = document.getElementById('import-btn');
+  const importFile = document.getElementById('import-file');
+  if (importBtn && importFile) {
+    importBtn.addEventListener('click', () => importFile.click());
+    importFile.addEventListener('change', e => {
+      if (e.target.files.length > 0) {
+        importChecklist(e.target.files[0]);
+      }
+    });
+  }
+});
+
+// Ajouter un champ de note personnelle à chaque alternative
+function addNotesToAlternatives() {
+  document.querySelectorAll('input[type="checkbox"][data-key]').forEach(box => {
+    const key = box.dataset.key;
+    if (!key) return;
+    const li = box.closest('li');
+    if (!li || li.querySelector('.note-btn')) return; // déjà ajouté
+    // Créer le bouton note
+    const noteBtn = document.createElement('button');
+    noteBtn.type = 'button';
+    noteBtn.className = 'note-btn';
+    noteBtn.title = 'Ajouter une note';
+    noteBtn.textContent = '📝';
+    noteBtn.style.marginLeft = '0.5em';
+    // Créer le champ note caché
+    const noteInput = document.createElement('textarea');
+    noteInput.className = 'note-input';
+    noteInput.rows = 2;
+    noteInput.placeholder = 'Ta note...';
+    noteInput.style.display = 'none';
+    noteInput.style.marginLeft = '2em';
+    noteInput.style.width = '90%';
+    noteInput.value = localStorage.getItem('note-' + key) || '';
+    // Afficher/masquer le champ note
+    noteBtn.onclick = () => {
+      noteInput.style.display = noteInput.style.display === 'none' ? 'block' : 'none';
+      if (noteInput.style.display === 'block') noteInput.focus();
+    };
+    // Sauvegarder la note
+    noteInput.oninput = () => {
+      localStorage.setItem('note-' + key, noteInput.value);
+    };
+    // Ajouter au DOM
+    li.appendChild(noteBtn);
+    li.appendChild(noteInput);
   });
 }
