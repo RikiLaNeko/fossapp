@@ -3,7 +3,7 @@ window.onload = () => {
   const sections = [
     {id: 'section-navigateur', file: 'section-navigateur.html', type: 'hosted'},
     {id: 'section-moteurs', file: 'section-moteurs.html', type: 'hosted,selfhost'},
-    {id: 'section-mail', file: 'section-mail.html', type: 'hosted,selfhost'},
+    {id: 'section-mail', file: 'section-mail.html', type: 'hosted'},
     {id: 'section-android', file: 'section-android.html', type: 'hosted'},
     {id: 'section-cartes', file: 'section-cartes.html', type: 'hosted,selfhost'},
     {id: 'section-cloud', file: 'section-cloud.html', type: 'hosted,selfhost'},
@@ -25,6 +25,7 @@ window.onload = () => {
           // Initialiser les interactions après le chargement de toutes les sections
           if (loaded === sections.length) {
             initFossappInteractions();
+            setFilter('all'); // Afficher tout une fois que tout est chargé
           }
         });
   });
@@ -34,7 +35,6 @@ window.onload = () => {
   document.getElementById('filter-selfhost').onclick = () => setFilter('selfhost');
   // Initialiser le reste de la page (hors sections dynamiques)
   initFossappInteractions();
-  setFilter('all');
 };
 
 function initFossappInteractions() {
@@ -130,18 +130,24 @@ function setFilter(filter) {
   } else if (filter === 'selfhost') {
     document.getElementById('filter-selfhost').classList.add('active');
   }
-  // Afficher/masquer les sections selon le filtre
+  // Filtrage par item (li)
   document.querySelectorAll('[data-type-section]').forEach(section => {
-    if (filter === 'all') {
-      section.style.display = '';
-    } else {
-      const types = section.getAttribute('data-type-section').split(',');
-      if (types.includes(filter)) {
-        section.style.display = '';
+    // Afficher la section par défaut
+    section.style.display = '';
+    // Filtrer les items à l'intérieur
+    section.querySelectorAll('li').forEach(li => {
+      const type = li.getAttribute('data-type');
+      if (!type || filter === 'all') {
+        li.style.display = '';
+      } else if (type.split(',').includes(filter)) {
+        li.style.display = '';
       } else {
-        section.style.display = 'none';
+        li.style.display = 'none';
       }
-    }
+    });
+    // Masquer la section si aucun item visible
+    const hasVisible = Array.from(section.querySelectorAll('li')).some(li => li.style.display !== 'none');
+    section.style.display = hasVisible ? '' : 'none';
   });
 }
 
