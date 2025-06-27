@@ -11,7 +11,8 @@ window.onload = () => {
     {id: 'section-bureautique', file: 'section-bureautique.html', type: 'hosted,selfhost'},
     {id: 'section-multimedia', file: 'section-multimedia.html', type: 'hosted,selfhost'},
     {id: 'section-communication', file: 'section-communication.html', type: 'hosted,selfhost'},
-    {id: 'section-os', file: 'section-os.html', type: 'selfhost'}
+    {id: 'section-os', file: 'section-os.html', type: 'selfhost'},
+    {id: 'section-competences', file: 'section-competences.html', type: 'selfhost'}
   ];
   let loaded = 0;
   sections.forEach(section => {
@@ -260,6 +261,13 @@ function animatePopup(popup, show) {
   } else {
     popup.classList.remove('popup-fade-in');
     popup.classList.add('popup-fade-out');
+    // Masquer l'élément après l'animation
+    setTimeout(() => {
+      if (popup.classList.contains('popup-fade-out')) {
+        popup.style.display = 'none';
+      }
+    }, 200); // Durée d'animation à ajuster selon votre CSS
+
     if (typeof popup._autoCloseTimeout !== 'undefined') {
       clearTimeout(popup._autoCloseTimeout);
       popup._autoCloseTimeout = undefined;
